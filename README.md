@@ -2,7 +2,7 @@
 An express-graphql crud app.
 
 
-## Server-Side
+## Server-Side (server.js)
 
 
 ### Types
@@ -61,3 +61,28 @@ An express-graphql crud app.
   * **`id`** - The id of the user to be deleted.
 * **returns**
   * **`boolean`** true if the deletion was successful and false otherwise.
+  
+ ## Client-Side (index.html)
+
+ 
+ ### Left Column
+ 
+ 
+The left column supports four actions that a user can take:
+
+* **Create** - Create a new user.
+* **Read** - Read the data of a user.
+* **Update** - Update an existing user.
+* **Delete** - Delete a user from the database.
+
+Each of these operations are done by sending requests to the graphql server.
+
+### Middle Column
+
+The middle column displays the response from the server.
+
+### Right Column
+
+The right column displays the state of the database after each operation.
+
+**Note** - The database is **NOT** reactive and will not update for all users when changed.
