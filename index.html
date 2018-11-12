@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+  <head>
+    <title>GraphQL</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			button,
+			input {
+				padding: 3px 5px;
+			}
+			body {
+				display: flex;
+				text-align: center;
+				flex-direction: row;
+				min-height: 100vh;
+				align-items: center;
+				justify-content: center;
+				font-size: calc(10px + 1vmin);
+				background-color: #282c34;
+				color: white;
+			}
+			.crud,
+			.response,
+			.database,
+			.create-user,
+			.read-user,
+			.update-user,
+			.delete-user {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-evenly;
+				min-height: 100vh;
+			}
+			.crud {
+				min-width: 50vh;
+			}
+			.response,
+			.database,
+			.create-user,
+			.read-user,
+			.update-user,
+			.delete-user {
+				min-height: 20vh;
+				min-width: 40vh;
+				background-color: gray;
+				border: 1px solid white;
+			}
+			.response,
+			.database {
+				justify-content: flex-start;
+				overflow: scroll;
+				white-space: pre;
+				text-align: left;
+				min-height: 92vh;
+				max-height: 92vh;
+				min-width: 50vh;
+				max-width: 50vh;
+			}
+			.response h2,
+			.database h2 {
+				padding: 40px 0;
+			}
+			.response p,
+			.database p {
+				font-size: calc(8px + 1vmin);
+				font-family: monospace;
+			}
+			.database {
+				margin-left: 5vh;
+			}
+		</style>
+  </head>
+  <body>
+
+			<div class="crud">
+
+				<!-- Create a new user with the given first and last names. -->
+
+				<div class="create-user">
+						<h2>Create</h2>
+						<input class="first-name" placeholder="first name">
+						<input class="last-name" placeholder="last name">
+						<button>Submit</button>
+				</div>
+
+				<!-- Read the user with the given id. -->
+
+				<div class="read-user">
+					<h2>Read</h2>
+					<input class="id" placeholder="user id">
+					<button>Submit</button>
+				</div>
+
+				<!-- Update the user with the given id with the given new first and last names. -->
+
+				<div class="update-user">
+					<h2>Update</h2>
+					<input class="id" placeholder="user id">
+					<input class="first-name" placeholder="new first name">
+					<input class="last-name" placeholder="new last name">
+					<button>Submit</button>
+				</div>
+
+				<!-- Delete the user with the given id. -->
+
+				<div class="delete-user">
+					<h2>Delete</h2>
+					<input class="id" placeholder="user id">
+					<button>Submit</button>
+				</div>
+
+			</div>
+
+			<!-- Display the response of the most recent query or mutation. -->
+
+			<div class="response">
+				<h2>Response</h2>
+				<p></p>
+			</div>
+
+			<!-- Display the current state of the database. -->
+
+			<div class="database">
+				<h2>Database</h2>
+				<p></p>
+			</div>
+
+	</body>
+	<script>
+
+			// ****** //
+			// Create //
+			// ****** //
+
+			document.querySelector('.create-user button').addEventListener('click', () => {
+				const firstName = document.querySelector('.create-user .first-name').value;
+				const lastName = document.querySelector('.create-user .last-name').value;
+				const variables = { firstName, lastName };
+				const query = `
+					mutation createUser($firstName: String!, $lastName: String!) {
+						createUser(firstName: $firstName, lastName: $lastName) {
+							id
+							fullName
+							firstName
+							lastName
+						}
+					}`;
+				sendQuery(query, variables, (data) => {
+					showResponse(data)
+					refreshDB();
+				});
+			});
+
+			// **** //
+			// Read //
+			// **** //
+	
+			document.querySelector('.read-user button').addEventListener('click', () => {
+				const id = parseInt(document.querySelector('.read-user .id').value);
+				const variables = { id };
+				const query = `
+					query user($id: Int!) {
+						user(id: $id) {
+							id,
+							fullName,
+							firstName,
+							lastName,
+						}
+					}`;
+				sendQuery(query, variables, (data) => {
+					showResponse(data)
+					refreshDB();
+				});
+			});
+
+			// ****** //
+			// Update //
+			// ****** //
+
+			document.querySelector('.update-user button').addEventListener('click', () => {
+				const id = parseInt(document.querySelector('.update-user .id').value);
+				const firstName = document.querySelector('.update-user .first-name').value;
+				const lastName = document.querySelector('.update-user .last-name').value;
+				const variables = { id, firstName, lastName };
+				const query = `
+					mutation updateUser($id: Int!, $firstName: String!, $lastName: String!) {
+						updateUser(id: $id, firstName: $firstName, lastName: $lastName) {
+							id,
+							fullName,
+							firstName,
+							lastName,
+						}
+					}`;
+				sendQuery(query, variables, (data) => {
+					showResponse(data)
+					refreshDB();
+				});
+			});
+
+			// ****** //
+			// Delete //
+			// ****** //
+
+			document.querySelector('.delete-user button').addEventListener('click', () => {
+				const id = parseInt(document.querySelector('.delete-user .id').value);
+				const variables = { id };
+				const query = `
+					mutation deleteUser($id: Int!) {
+						deleteUser(id: $id)
+					}`;
+				sendQuery(query, variables, (data) => {
+					showResponse(data)
+					refreshDB();
+				});
+			});
+
+			// **************** //
+			// Helper Functions //
+			// **************** //
+
+			function sendQuery(query, variables, callback) {
+				fetch('/graphql', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					body: JSON.stringify({
+						query,
+						variables,
+					}),
+				})
+					.then(r => r.json())
+					.then(data => callback(data));
+			}
+
+			function showResponse(data) {				
+				document.querySelector('.response p').innerText = JSON.stringify(data, null, 2);
+			}
+
+			function refreshDB() {
+				const query = `
+					query users {
+						users {
+							id,
+							fullName,
+							firstName,
+							lastName,
+						}
+					}`;
+				sendQuery(query, null, (data) => {
+					document.querySelector('.database p').innerText = JSON.stringify(data, null, 2);
+				});
+			}
+
+			refreshDB();
+
+		</script>
+</html>
