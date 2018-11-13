@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const graphqlHTTP = require('express-graphql');
 const {
 	GraphQLNonNull,
@@ -137,11 +138,9 @@ const userSchema = new GraphQLSchema({
 // ******************************** //
 
 const app = express();
+app.use(express.static(path.resolve(__dirname, 'public')));
 app.use('/graphql', graphqlHTTP({
   schema: userSchema,
   graphiql: true,
 }));
-app.get('', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
 app.listen(4000, () => console.log('Now browse to http://localhost:4000'));

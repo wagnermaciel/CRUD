@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+  <head>
+    <title>GraphQL</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  <body>
+
+			<div class="crud">
+
+				<!-- Create a new user with the given first and last names. -->
+
+				<div class="create-user">
+						<h2>Create</h2>
+						<input class="first-name" placeholder="first name">
+						<input class="last-name" placeholder="last name">
+						<button>Submit</button>
+				</div>
+
+				<!-- Read the user with the given id. -->
+
+				<div class="read-user">
+					<h2>Read</h2>
+					<input class="id" placeholder="user id">
+					<button>Submit</button>
+				</div>
+
+				<!-- Update the user with the given id with the given new first and last names. -->
+
+				<div class="update-user">
+					<h2>Update</h2>
+					<input class="id" placeholder="user id">
+					<input class="first-name" placeholder="new first name">
+					<input class="last-name" placeholder="new last name">
+					<button>Submit</button>
+				</div>
+
+				<!-- Delete the user with the given id. -->
+
+				<div class="delete-user">
+					<h2>Delete</h2>
+					<input class="id" placeholder="user id">
+					<button>Submit</button>
+				</div>
+
+			</div>
+
+			<!-- Display the response of the most recent query or mutation. -->
+
+			<div class="response">
+				<h2>Response</h2>
+				<p></p>
+			</div>
+
+			<!-- Display the current state of the database. -->
+
+			<div class="database">
+				<h2>Database</h2>
+				<p></p>
+			</div>
+
+	</body>
+</html>

@@ -1,0 +1,69 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+button,
+input {
+	padding: 3px 5px;
+}
+body {
+	display: flex;
+	text-align: center;
+	flex-direction: row;
+	min-height: 100vh;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 1vmin);
+	background-color: #282c34;
+	color: white;
+}
+.crud,
+.response,
+.database,
+.create-user,
+.read-user,
+.update-user,
+.delete-user {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	min-height: 100vh;
+}
+.crud {
+	min-width: 50vh;
+}
+.response,
+.database,
+.create-user,
+.read-user,
+.update-user,
+.delete-user {
+	min-height: 20vh;
+	min-width: 40vh;
+	background-color: gray;
+	border: 1px solid white;
+}
+.response,
+.database {
+	justify-content: flex-start;
+	overflow: scroll;
+	white-space: pre;
+	text-align: left;
+	min-height: 92vh;
+	max-height: 92vh;
+	min-width: 50vh;
+	max-width: 50vh;
+}
+.response h2,
+.database h2 {
+	padding: 40px 0;
+}
+.response p,
+.database p {
+	font-size: calc(8px + 1vmin);
+	font-family: monospace;
+}
+.database {
+	margin-left: 5vh;
+}
