@@ -28,5 +28,5 @@ let index = 3;
 module.exports.createUser = (firstName, lastName) => users[index] = {id: index++, firstName, lastName};
 module.exports.getUsers = () => Object.values(users);
 module.exports.getUser = (id) => users[id];
-module.exports.updateUser = (id, firstName, lastName) => users[id] = {id, firstName, lastName};
+module.exports.updateUser = (id, firstName, lastName) => users[id] ? users[id] = {id, firstName, lastName} : null;
 module.exports.deleteUser = (id) => users[id] ? delete users[id] : false;
