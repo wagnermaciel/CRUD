@@ -12,7 +12,7 @@ body {
 	flex-direction: row;
 	min-height: 100vh;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-evenly;
 	font-size: calc(10px + 1vmin);
 	background-color: #282c34;
 	color: white;
@@ -29,9 +29,6 @@ body {
 	align-items: center;
 	justify-content: space-evenly;
 	min-height: 100vh;
-}
-.crud {
-	min-width: 50vh;
 }
 .response,
 .database,
@@ -63,7 +60,4 @@ body {
 .database p {
 	font-size: calc(8px + 1vmin);
 	font-family: monospace;
-}
-.database {
-	margin-left: 5vh;
 }
