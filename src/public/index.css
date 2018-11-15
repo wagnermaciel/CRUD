@@ -45,7 +45,7 @@ body {
 .database {
 	justify-content: flex-start;
 	overflow: scroll;
-	white-space: pre;
+	white-space: pre-wrap;
 	text-align: left;
 	min-height: 92vh;
 	max-height: 92vh;
